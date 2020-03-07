@@ -1,0 +1,11 @@
+body {
+  height: 100vh;
+}
+
+.aq-info-wrapper {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
