@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://kognise.github.io/water.css/dist/dark.css"
+    />
+    <style>
+      body {
+        height: 100vh;
+      }
+
+      .aq-info-wrapper {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+    </style>
+
+    <title>noMD</title>
+  </head>
+
+  <body>
+    <article class="aq-info-wrapper">
+      <h1 id="aq-value"></h1>
+      <h5 id="aq-param"></h5>
+      <h3 id="aq-city"></h3>
+      <h1 id="message">Loading...</h1>
+    </article>
+
+    <script>
+      const aqValue = document.getElementById("aq-value");
+      const aqParam = document.getElementById("aq-param");
+      const aqCity = document.getElementById("aq-city");
+      const message = document.getElementById("message");
+
+      function hideLoader() {
+        message.innerText = "";
+      }
+
+      function presetAirQuality(result) {
+        aqValue.innerText = result.value;
+        aqParam.innerText = result.parameter;
+        aqCity.innerText = result.city;
+      }
+
+      function showError() {
+        message.innerText = "An error occured 😞";
+      }
+
+      function handleResponse({ results: [head] }) {
+        if (head) {
+          hideLoader();
+          presetAirQuality(head);
+        } else {
+          showError();
+        }
+      }
+
+      const api = `https://api.openaq.org/v1/measurements`;
+      const params = `
+            country=PL
+            parameter=pm25
+            order_by[]=date.local&order_by[]=value
+            sort[]=asc&sort[]=desc
+        `
+        .split("\n")
+        .map(s => s.trim())
+        .filter(Boolean)
+        .join("&");
+
+      const url = `${api}?${params}`;
+
+      fetch(url)
+        .then(r => r.json())
+        .then(handleResponse)
+        .catch(showError);
+    </script>
+  </body>
+</html>
