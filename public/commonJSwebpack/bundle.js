@@ -81,42 +81,50 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./public/commonJS/main.js");
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
-/******/ ({
-
-/***/ "./public/commonJS/main.js":
-/*!*********************************!*\
-  !*** ./public/commonJS/main.js ***!
-  \*********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("const sum = __webpack_require__(/*! ./sum */ \"./public/commonJS/sum.js\");\nconst sub = __webpack_require__(/*! ./sub */ \"./public/commonJS/sub.js\");\n\nconst sumText = document.getElementById(\"add\");\nconst subText = document.getElementById(\"sub\");\n\nsumText.innerText = `2 + 2 = ${sum(2, 2)}`;\nsubText.innerText = `2 - 2 = ${sub(2, 2)}`;\n\n\n//# sourceURL=webpack:///./public/commonJS/main.js?");
-
-/***/ }),
-
-/***/ "./public/commonJS/sub.js":
-/*!********************************!*\
-  !*** ./public/commonJS/sub.js ***!
-  \********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("const sum = __webpack_require__(/*! ./sum */ \"./public/commonJS/sum.js\");\n\nfunction _negate(a) {\n  return -a;\n}\n\nfunction sub(a, b) {\n  return sum(a, _negate(b));\n}\n\nmodule.exports = sub;\n\n\n//# sourceURL=webpack:///./public/commonJS/sub.js?");
-
-/***/ }),
-
-/***/ "./public/commonJS/sum.js":
-/*!********************************!*\
-  !*** ./public/commonJS/sum.js ***!
-  \********************************/
-/*! no static exports found */
+/******/ ([
+/* 0 */
 /***/ (function(module, exports) {
 
-eval("function sum(a, b) {\n  return a + b;\n}\n\nmodule.exports = sum;\n\n\n//# sourceURL=webpack:///./public/commonJS/sum.js?");
+function sum(a, b) {
+  return a + b;
+}
+
+module.exports = sum;
+
+
+/***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const sum = __webpack_require__(0);
+const sub = __webpack_require__(2);
+
+const sumText = document.getElementById("add");
+const subText = document.getElementById("sub");
+
+sumText.innerText = `2 + 2 = ${sum(2, 2)}`;
+subText.innerText = `2 - 2 = ${sub(2, 2)}`;
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const sum = __webpack_require__(0);
+
+function _negate(a) {
+  return -a;
+}
+
+function sub(a, b) {
+  return sum(a, _negate(b));
+}
+
+module.exports = sub;
+
 
 /***/ })
-
-/******/ });
+/******/ ]);

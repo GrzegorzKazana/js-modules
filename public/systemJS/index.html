@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="stylesheet"
+      href="https://kognise.github.io/water.css/dist/dark.css"
+    />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/systemjs/6.2.5/system.js"
+      integrity="sha256-aOszgmOEHdW/gECInyVmP4pNg4JUAqYyZw9SQYMgwBo="
+      crossorigin="anonymous"
+    ></script>
+    <script type="systemjs-importmap">
+      {
+        "imports": {
+          "sum": "./sum.js",
+          "sub": "./sub.js"
+        }
+      }
+    </script>
+
+    <title>systemJS</title>
+  </head>
+
+  <body>
+    <article class="wrapper">
+      <h1 id="add"></h1>
+      <h1 id="sub"></h1>
+    </article>
+    <script>
+      System.import("./main.js")
+        .then(console.log)
+        .catch(console.error);
+    </script>
+  </body>
+</html>
