@@ -1,5 +1,7 @@
-(function() {
-  window.sum = function(a, b) {
+window.sum = (function() {
+  function sum(a, b) {
     return a + b;
-  };
+  }
+
+  return sum;
 })();

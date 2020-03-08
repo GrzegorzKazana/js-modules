@@ -1,9 +1,11 @@
-(function() {
+window.sub = (function() {
   function _negate(a) {
     return -a;
   }
 
-  window.sub = function(a, b) {
+  function sub(a, b) {
     return sum(a, _negate(b));
-  };
+  }
+
+  return sub;
 })();
