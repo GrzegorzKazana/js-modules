@@ -12,7 +12,7 @@
         height: 100vh;
       }
 
-      .aq-info-wrapper {
+      .wrapper {
         height: 100%;
         display: flex;
         flex-direction: column;
@@ -25,60 +25,29 @@
   </head>
 
   <body>
-    <article class="aq-info-wrapper">
-      <h1 id="aq-value"></h1>
-      <h5 id="aq-param"></h5>
-      <h3 id="aq-city"></h3>
-      <h1 id="message">Loading...</h1>
+    <article class="wrapper">
+      <h1 id="add"></h1>
+      <h1 id="sub"></h1>
     </article>
 
     <script>
-      const aqValue = document.getElementById("aq-value");
-      const aqParam = document.getElementById("aq-param");
-      const aqCity = document.getElementById("aq-city");
-      const message = document.getElementById("message");
+      const sumText = document.getElementById("add");
+      const subText = document.getElementById("sub");
 
-      function hideLoader() {
-        message.innerText = "";
+      sumText.innerText = `2 + 2 = ${sum(2, 2)}`;
+      subText.innerText = `2 - 2 = ${sub(2, 2)}`;
+
+      function sum(a, b) {
+        return a + b;
       }
 
-      function presetAirQuality(result) {
-        aqValue.innerText = result.value;
-        aqParam.innerText = result.parameter;
-        aqCity.innerText = result.city;
+      function _negate(a) {
+        return -a;
       }
 
-      function showError() {
-        message.innerText = "An error occured 😞";
+      function sub(a, b) {
+        return sum(a, _negate(b));
       }
-
-      function handleResponse({ results: [head] }) {
-        if (head) {
-          hideLoader();
-          presetAirQuality(head);
-        } else {
-          showError();
-        }
-      }
-
-      const api = `https://api.openaq.org/v1/measurements`;
-      const params = `
-            country=PL
-            parameter=pm25
-            order_by[]=date.local&order_by[]=value
-            sort[]=asc&sort[]=desc
-        `
-        .split("\n")
-        .map(s => s.trim())
-        .filter(Boolean)
-        .join("&");
-
-      const url = `${api}?${params}`;
-
-      fetch(url)
-        .then(r => r.json())
-        .then(handleResponse)
-        .catch(showError);
     </script>
   </body>
 </html>

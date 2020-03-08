@@ -1,29 +1,7 @@
-const { hideLoader, presetAirQuality, showError } = app;
+(function() {
+  const sumText = document.getElementById("add");
+  const subText = document.getElementById("sub");
 
-const api = `https://api.openaq.org/v1/measurements`;
-const params = `
-        country=PL
-        parameter=pm25
-        order_by[]=date.local&order_by[]=value
-        sort[]=asc&sort[]=desc
-    `
-  .split("\n")
-  .map(s => s.trim())
-  .filter(Boolean)
-  .join("&");
-
-const url = `${api}?${params}`;
-
-fetch(url)
-  .then(r => r.json())
-  .then(handleResponse)
-  .catch(showError);
-
-function handleResponse({ results: [head] }) {
-  if (head) {
-    hideLoader();
-    presetAirQuality(head);
-  } else {
-    showError();
-  }
-}
+  sumText.innerText = `2 + 2 = ${sum(2, 2)}`;
+  subText.innerText = `2 - 2 = ${sub(2, 2)}`;
+})();

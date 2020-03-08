@@ -6,7 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "serve": "http-serve -p 3030 public",
-    "pack:cjs": "webpack public/commonJS/main.js -o public/commonJSwebpack/bundle.js"
+    "pack": "webpack",
+    "pack:amd": "webpack -c webpack.config.amd.js",
+    "pack:umd": "webpack -c webpack.config.umd.js",
+    "pack:sys": "webpack -c webpack.config.sys.js"
   },
   "keywords": [],
   "author": "",

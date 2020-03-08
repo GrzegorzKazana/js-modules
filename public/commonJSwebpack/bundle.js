@@ -81,73 +81,42 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = "./public/commonJS/main.js");
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
+/******/ ({
+
+/***/ "./public/commonJS/main.js":
+/*!*********************************!*\
+  !*** ./public/commonJS/main.js ***!
+  \*********************************/
+/*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-const { hideLoader, presetAirQuality, showError } = __webpack_require__(1);
-
-const api = `https://api.openaq.org/v1/measurements`;
-const params = `
-        country=PL
-        parameter=pm25
-        order_by[]=date.local&order_by[]=value
-        sort[]=asc&sort[]=desc
-    `
-  .split("\n")
-  .map(s => s.trim())
-  .filter(Boolean)
-  .join("&");
-
-const url = `${api}?${params}`;
-
-fetch(url)
-  .then(r => r.json())
-  .then(handleResponse)
-  .catch(showError);
-
-function handleResponse({ results: [head] }) {
-  if (head) {
-    hideLoader();
-    presetAirQuality(head);
-  } else {
-    showError();
-  }
-}
-
+eval("const sum = __webpack_require__(/*! ./sum */ \"./public/commonJS/sum.js\");\nconst sub = __webpack_require__(/*! ./sub */ \"./public/commonJS/sub.js\");\n\nconst sumText = document.getElementById(\"add\");\nconst subText = document.getElementById(\"sub\");\n\nsumText.innerText = `2 + 2 = ${sum(2, 2)}`;\nsubText.innerText = `2 - 2 = ${sub(2, 2)}`;\n\n\n//# sourceURL=webpack:///./public/commonJS/main.js?");
 
 /***/ }),
-/* 1 */
+
+/***/ "./public/commonJS/sub.js":
+/*!********************************!*\
+  !*** ./public/commonJS/sub.js ***!
+  \********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("const sum = __webpack_require__(/*! ./sum */ \"./public/commonJS/sum.js\");\n\nfunction _negate(a) {\n  return -a;\n}\n\nfunction sub(a, b) {\n  return sum(a, _negate(b));\n}\n\nmodule.exports = sub;\n\n\n//# sourceURL=webpack:///./public/commonJS/sub.js?");
+
+/***/ }),
+
+/***/ "./public/commonJS/sum.js":
+/*!********************************!*\
+  !*** ./public/commonJS/sum.js ***!
+  \********************************/
+/*! no static exports found */
 /***/ (function(module, exports) {
 
-const aqValue = document.getElementById("aq-value");
-const aqParam = document.getElementById("aq-param");
-const aqCity = document.getElementById("aq-city");
-const message = document.getElementById("message");
-
-function hideLoader() {
-  message.innerText = "";
-}
-
-function presetAirQuality(result) {
-  aqValue.innerText = result.value;
-  aqParam.innerText = result.parameter;
-  aqCity.innerText = result.city;
-}
-
-function showError() {
-  message.innerText = "An error occured 😞";
-}
-
-module.exports = {
-  hideLoader,
-  presetAirQuality,
-  showError
-};
-
+eval("function sum(a, b) {\n  return a + b;\n}\n\nmodule.exports = sum;\n\n\n//# sourceURL=webpack:///./public/commonJS/sum.js?");
 
 /***/ })
-/******/ ]);
+
+/******/ });
