@@ -9,7 +9,8 @@
     "pack": "webpack",
     "pack:amd": "webpack -c webpack.config.amd.js",
     "pack:umd": "webpack -c webpack.config.umd.js",
-    "pack:sys": "webpack -c webpack.config.sys.js"
+    "pack:sys": "webpack -c webpack.config.sys.js",
+    "node:sys": "node node/systemJS/main.js"
   },
   "keywords": [],
   "author": "",
@@ -18,5 +19,8 @@
     "http-serve": "^1.0.1",
     "webpack": "^4.42.0",
     "webpack-cli": "^4.0.0-beta.2"
+  },
+  "dependencies": {
+    "systemjs": "^6.2.5"
   }
 }
