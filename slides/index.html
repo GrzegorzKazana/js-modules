@@ -49,7 +49,7 @@
         </section>
         <section>
           <section>
-            <h5>1. inline script</h5>
+            <h3>1. inline script</h3>
             <pre><code class="hljs" data-line-numbers="8-10">
 	&lt;html&gt;
 	  &lt;head&gt;
@@ -74,20 +74,20 @@
         </section>
         <section>
           <section>
-            <h5>1. file dep + inline script</h5>
-            <pre><code class="hljs" data-line-numbers="8-10">
-             &lt;html&gt;
-            &lt;head&gt;
-              &lt;!-- ... --&gt;
-            &lt;/head&gt;
-            &lt;body&gt;
-              &lt;!-- ... --&gt;
-              &lt;script src=&quot;lib.js&quot;&gt;&lt;/script&gt;
-              &lt;script&gt;
-            	<!-- jsowy śmietnik -->
-              &lt;/script&gt;
-            &lt;/body&gt;
-             &lt;/html&gt;
+            <h3>2. file dep + inline script</h3>
+            <pre><code class="hljs" data-line-numbers="8-11">
+	&lt;html&gt;
+	  &lt;head&gt;
+		&lt;!-- ... --&gt;
+	  &lt;/head&gt;
+	  &lt;body&gt;
+	  &lt;!-- ... --&gt;
+	  &lt;script src=&quot;lib.js&quot;&gt;&lt;/script&gt;
+	  &lt;script&gt;
+		<!-- jsowy śmietnik -->
+	  &lt;/script&gt;
+	  &lt;/body&gt;
+	&lt;/html&gt;
             	  </code></pre>
           </section>
           <section>
@@ -95,6 +95,162 @@
               <li>+ code segregation</li>
               <li>- global pollution</li>
               <li>- no encapsulation</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>3. immediately invoked function expression</h3>
+            <pre><code class="hljs" data-line-numbers="8-11">
+	&lt;html&gt;
+	  &lt;head&gt;
+		&lt;!-- ... --&gt;
+	  &lt;/head&gt;
+	  &lt;body&gt;
+	  &lt;!-- ... --&gt;
+	  &lt;script src=&quot;lib.js&quot;&gt;&lt;/script&gt;
+	  &lt;script&gt;
+		<!-- jsowy śmietnik -->
+	  &lt;/script&gt;
+	  &lt;/body&gt;
+	&lt;/html&gt;
+					</code></pre>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="8-10">
+	(function() {
+		<!-- ... -->
+	})()
+
+				</code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type: none;">
+              <li>+ code segregation</li>
+              <li>+ no global pollution</li>
+              <li>+ encapsulation</li>
+              <li>- order of imports does matter</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>4. commonjs (cjs, since 2009)</h3>
+            <br />
+            <h1>🤔</h1>
+          </section>
+          <section>
+            <h5>What do we need?</h5>
+            <ul style="list-style-type: none;">
+              <li>- file based modularity</li>
+              <li>- synchronous imports across modules</li>
+              <li>- clear exposed interface</li>
+            </ul>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="1-10">
+	const lib = require('lib')
+
+	/*
+		something
+	*/
+
+	module.exports = sth;
+
+					</code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type: none;">
+              <li>- cannot be used in browser</li>
+              <li>
+                - synchronous imports in browser may not be the best idea tho
+              </li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>5. Asynchronous module definition (AMD, since 2011)</h3>
+            <i style="font-style:italic">a.k.a.</i>
+            <h6 style="font-style: italic;">
+              How to make browsers do things they can't?
+            </h6>
+          </section>
+          <section>
+            <img src="assets/letswrite.png" style="max-height:60vh" />
+          </section>
+          <section>
+            <h5>What do we need?</h5>
+            <ul style="list-style-type: none;">
+              <li>- file based modularity</li>
+              <li>- <strike>synchronous imports across modules</strike></li>
+              <li>- asynchronous imports across modules</li>
+              <li>- clear exposed interface</li>
+              <li>- irrelevantcy of import order</li>
+            </ul>
+          </section>
+          <section>
+            <img src="assets/require.png" style="height:400px" />
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="1-10">
+/* lib.js */
+define([/* list of deps */], function(depA, depB){
+  /* some internal stuff */
+
+  /* export by returning */
+  return sth
+})
+  
+					  </code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type: none;">
+              <li>+ asynchronous imports</li>
+              <li>+ irrelevantcy of import order</li>
+              <li class="fragment">- ecosystem fragmentation</li>
+            </ul>
+          </section>
+        </section>
+
+        <section>
+          <section>
+            <h3>6. Universal module definition (UMD)</h3>
+            <i style="font-style:italic">a.k.a.</i>
+            <h6 style="font-style: italic;">
+              We got what we want, now make it work everywhere.
+            </h6>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="1-100" style="font-size: 75%;max-height: 600px;">
+/* lib.js */
+(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+	define(["lib"], factory);	/* amd */
+  } else if (typeof exports === "object" && typeof module === "object") {
+	module.exports = factory(require("./depA"));	/* cjs */
+  } else {
+	root.app = factory();	/* global */
+  }
+})(this, function(depA) {
+  /* some internal stuff */
+
+  /* export by returning */
+  return sth
+});
+				  
+						</code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type: none;">
+              <li>+ asynchronous imports in AMD env</li>
+              <li>+ sync imports in CJS env</li>
+              <li>+ fallback to assigning to global/window</li>
+              <br />
+              <li class="fragment" style="text-align: center;"><h2>🤮</h2></li>
             </ul>
           </section>
         </section>

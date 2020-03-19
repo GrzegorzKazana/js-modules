@@ -20,6 +20,12 @@
 
     <script src="sum.js"></script>
     <script src="sub.js"></script>
-    <script src="main.js"></script>
+    <script>
+      const sumText = document.getElementById("add");
+      const subText = document.getElementById("sub");
+
+      sumText.innerText = `2 + 2 = ${sum(2, 2)}`;
+      subText.innerText = `2 - 2 = ${sub(2, 2)}`;
+    </script>
   </body>
 </html>
