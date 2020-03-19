@@ -37,14 +37,15 @@
         <section>
           <h3>Why do we need modules?</h3>
           <ul>
-            <li>expose functionality and hide implementation</li>
+            <li>code reusability</li>
             <li>segregate our code</li>
             <li>scoping</li>
+            <li>expose functionality and hide implementation</li>
           </ul>
         </section>
         <section>
           <h2>
-            How about JS?
+            How about modules in JS?
           </h2>
         </section>
         <section>
@@ -58,7 +59,7 @@
 	  &lt;body&gt;
 		&lt;!-- ... --&gt;
 		&lt;script&gt;
-		  <!-- jsowy śmietnik -->
+		  <!-- js garbage -->
 		&lt;/script&gt;
 	  &lt;/body&gt;
 	&lt;/html&gt;
@@ -67,6 +68,7 @@
           <section>
             <ul style="list-style-type: none;">
               <li>- global pollution</li>
+              <li>- no code reusability</li>
               <li>- no code segregation</li>
               <li>- no encapsulation</li>
             </ul>
@@ -74,7 +76,7 @@
         </section>
         <section>
           <section>
-            <h3>2. file dep + inline script</h3>
+            <h3>2. file deps + inline script</h3>
             <pre><code class="hljs" data-line-numbers="8-11">
 	&lt;html&gt;
 	  &lt;head&gt;
@@ -84,7 +86,7 @@
 	  &lt;!-- ... --&gt;
 	  &lt;script src=&quot;lib.js&quot;&gt;&lt;/script&gt;
 	  &lt;script&gt;
-		<!-- jsowy śmietnik -->
+		<!-- ... -->
 	  &lt;/script&gt;
 	  &lt;/body&gt;
 	&lt;/html&gt;
@@ -93,6 +95,7 @@
           <section>
             <ul style="list-style-type: none;">
               <li>+ code segregation</li>
+              <li>+ some code reusability</li>
               <li>- global pollution</li>
               <li>- no encapsulation</li>
             </ul>
@@ -111,7 +114,7 @@
 	  &lt;!-- ... --&gt;
 	  &lt;script src=&quot;lib.js&quot;&gt;&lt;/script&gt;
 	  &lt;script&gt;
-		<!-- jsowy śmietnik -->
+		<!-- ... -->
 	  &lt;/script&gt;
 	  &lt;/body&gt;
 	&lt;/html&gt;
@@ -119,9 +122,10 @@
           </section>
           <section>
             <pre><code class="hljs" data-line-numbers="8-10">
-	(function() {
-		<!-- ... -->
-	})()
+  /* lib.js */
+  (function() {
+	<!-- ... -->
+  })()
 
 				</code></pre>
           </section>
@@ -189,16 +193,16 @@
               <li>- <strike>synchronous imports across modules</strike></li>
               <li>- asynchronous imports across modules</li>
               <li>- clear exposed interface</li>
-              <li>- irrelevantcy of import order</li>
+              <li>- irrelevancy of import order</li>
             </ul>
           </section>
           <section>
             <img src="assets/require.png" style="height:400px" />
           </section>
           <section>
-            <pre><code class="hljs" data-line-numbers="1-10">
+            <pre><code class="hljs" data-line-numbers="1-10" style="font-size: 85%;">
 /* lib.js */
-define([/* list of deps */], function(depA, depB){
+define("module_name", ["depA", "depB"], function(depA, depB){
   /* some internal stuff */
 
   /* export by returning */
@@ -210,7 +214,7 @@ define([/* list of deps */], function(depA, depB){
           <section>
             <ul style="list-style-type: none;">
               <li>+ asynchronous imports</li>
-              <li>+ irrelevantcy of import order</li>
+              <li>+ irrelevancy of import order</li>
               <li class="fragment">- ecosystem fragmentation</li>
             </ul>
           </section>
@@ -229,11 +233,11 @@ define([/* list of deps */], function(depA, depB){
 /* lib.js */
 (function(root, factory) {
   if (typeof define === "function" && define.amd) {
-	define(["lib"], factory);	/* amd */
+	define("lib", ["depA"], factory);	/* amd */
   } else if (typeof exports === "object" && typeof module === "object") {
-	module.exports = factory(require("./depA"));	/* cjs */
+	module.exports = factory(require("depA"));	/* cjs */
   } else {
-	root.app = factory();	/* global */
+	root.app = factory(root["depA]);	/* global */
   }
 })(this, function(depA) {
   /* some internal stuff */
@@ -253,6 +257,72 @@ define([/* list of deps */], function(depA, depB){
               <li class="fragment" style="text-align: center;"><h2>🤮</h2></li>
             </ul>
           </section>
+        </section>
+        <section>
+          <section>
+            <h3>7. ES6 modules 🌈</h3>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="1-100">
+import lib from 'lib'
+
+export const sth = 42;
+
+export function sth2() {};
+
+export default class sth3 {};
+
+			  </code></pre>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="1-100">
+import('lib')
+  .then(lib => { /* ... */ })
+  .catch(err => { /* ... */ })
+
+			  </code></pre>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="8-13">
+&lt;html&gt;
+  &lt;head&gt;
+	&lt;!-- ... --&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;!-- ... --&gt;
+    &lt;script type="module" src=&quot;lib.js&quot;&gt;&lt;/script&gt;
+    &lt;script type="module"&gt;
+	import('lib')
+	  .then(lib => { /* ... */ })
+	  .catch(err => { /* ... */ })
+    &lt;/script&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+			
+			</code></pre>
+          </section>
+
+          <section>
+            <img src="assets/es6.png" />
+          </section>
+          <section>
+            <img src="assets/dynamic_import.png" />
+          </section>
+          <section>
+            <img src="assets/nodees.png" style="height:100px;border:0" />
+          </section>
+        </section>
+        <section>
+          <h3>What else is out there?</h3>
+          <ul>
+            <li>SystemJS</li>
+            <li>
+              plethora of tooling related with module transpilation<br />(webpack,
+              browserify, babel, jspm, rollup, ... 😵)
+            </li>
+            <li>???</li>
+            <li>check out examples in my repo!</li>
+          </ul>
         </section>
       </div>
     </div>
