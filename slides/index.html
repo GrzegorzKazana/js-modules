@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+
+    <title>Modules</title>
+
+    <link rel="stylesheet" href="css/reset.css" />
+    <link rel="stylesheet" href="css/reveal.css" />
+    <link rel="stylesheet" href="css/theme/black.css" />
+
+    <!-- Theme used for syntax highlighting of code -->
+    <link rel="stylesheet" href="lib/css/monokai.css" />
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.type = "text/css";
+      link.href = window.location.search.match(/print-pdf/gi)
+        ? "css/print/pdf.css"
+        : "css/print/paper.css";
+      document.getElementsByTagName("head")[0].appendChild(link);
+    </script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        <section>
+          <h1>Javascript modules</h1>
+          <h4>a brief introduction</h4>
+        </section>
+        <section>
+          <h3>Why do we need modules?</h3>
+          <ul>
+            <li>expose functionality and hide implementation</li>
+            <li>segregate our code</li>
+            <li>scoping</li>
+          </ul>
+        </section>
+        <section>
+          <h2>
+            How about JS?
+          </h2>
+        </section>
+        <section>
+          <section>
+            <h5>1. inline script</h5>
+            <pre><code class="hljs" data-line-numbers="8-10">
+	&lt;html&gt;
+	  &lt;head&gt;
+		&lt;!-- ... --&gt;
+	  &lt;/head&gt;
+	  &lt;body&gt;
+		&lt;!-- ... --&gt;
+		&lt;script&gt;
+		  <!-- jsowy śmietnik -->
+		&lt;/script&gt;
+	  &lt;/body&gt;
+	&lt;/html&gt;
+			</code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type: none;">
+              <li>- global pollution</li>
+              <li>- no code segregation</li>
+              <li>- no encapsulation</li>
+            </ul>
+          </section>
+        </section>
+        <section>
+          <section>
+            <h5>1. file dep + inline script</h5>
+            <pre><code class="hljs" data-line-numbers="8-10">
+             &lt;html&gt;
+            &lt;head&gt;
+              &lt;!-- ... --&gt;
+            &lt;/head&gt;
+            &lt;body&gt;
+              &lt;!-- ... --&gt;
+              &lt;script src=&quot;lib.js&quot;&gt;&lt;/script&gt;
+              &lt;script&gt;
+            	<!-- jsowy śmietnik -->
+              &lt;/script&gt;
+            &lt;/body&gt;
+             &lt;/html&gt;
+            	  </code></pre>
+          </section>
+          <section>
+            <ul style="list-style-type: none;">
+              <li>+ code segregation</li>
+              <li>- global pollution</li>
+              <li>- no encapsulation</li>
+            </ul>
+          </section>
+        </section>
+      </div>
+    </div>
+
+    <script src="js/reveal.js"></script>
+
+    <script>
+      // More info about config & dependencies:
+      // - https://github.com/hakimel/reveal.js#configuration
+      // - https://github.com/hakimel/reveal.js#dependencies
+      Reveal.initialize({
+        hash: true,
+        dependencies: [
+          { src: "plugin/markdown/marked.js" },
+          { src: "plugin/markdown/markdown.js" },
+          { src: "plugin/highlight/highlight.js" },
+          { src: "plugin/notes/notes.js", async: true }
+        ]
+      });
+    </script>
+  </body>
+</html>

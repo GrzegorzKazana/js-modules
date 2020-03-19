@@ -5,12 +5,15 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "http-serve -p 3030 public",
+    "serve": "http-serve -p 3030 public && open http://127.0.0.1:3030",
     "pack": "webpack",
     "pack:amd": "webpack -c webpack.config.amd.js",
     "pack:umd": "webpack -c webpack.config.umd.js",
     "pack:sys": "webpack -c webpack.config.sys.js",
-    "node:sys": "node node/systemJS/main.js"
+    "node:sys": "node node/systemJS/main.js",
+    "slides:install": "cd slides && npm i",
+    "slides:present": "cd slides && npm run start",
+    "start": "run-p serve slides:present"
   },
   "keywords": [],
   "author": "",
@@ -21,6 +24,7 @@
     "webpack-cli": "^4.0.0-beta.2"
   },
   "dependencies": {
+    "npm-run-all": "^4.1.5",
     "systemjs": "^6.2.5"
   }
 }
