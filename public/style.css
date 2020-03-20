@@ -1,5 +1,8 @@
 body {
+  max-width: unset;
   height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
 .wrapper {

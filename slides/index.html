@@ -37,10 +37,12 @@
         <section>
           <h3>Why do we need modules?</h3>
           <ul>
-            <li>code reusability</li>
-            <li>segregate our code</li>
+            <li>code segregation</li>
             <li>scoping</li>
-            <li>expose functionality and hide implementation</li>
+            <li>code reusability</li>
+            <li style="font-style: italic;">
+              expose functionality and hide implementation
+            </li>
           </ul>
         </section>
         <section>
@@ -187,6 +189,9 @@
             <img src="assets/letswrite.png" style="max-height:60vh" />
           </section>
           <section>
+            <img src="assets/require.png" style="height:400px" />
+          </section>
+          <section>
             <h5>What do we need?</h5>
             <ul style="list-style-type: none;">
               <li>- file based modularity</li>
@@ -196,9 +201,7 @@
               <li>- irrelevancy of import order</li>
             </ul>
           </section>
-          <section>
-            <img src="assets/require.png" style="height:400px" />
-          </section>
+
           <section>
             <pre><code class="hljs" data-line-numbers="1-10" style="font-size: 85%;">
 /* lib.js */
@@ -210,6 +213,17 @@ define("module_name", ["depA", "depB"], function(depA, depB){
 })
   
 					  </code></pre>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="3,4" style="font-size:80%;">
+&lt;script
+  data-main=&quot;main&quot;
+  src=&quot;https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.js&quot;
+  integrity=&quot;sha256-lIXwkX+X/PT2Ol6jZSAP/VfxI/RROCovmhrS4v1RrJs=&quot;
+  crossorigin=&quot;anonymous&quot;
+&gt;&lt;/script&gt;
+
+            </code></pre>
           </section>
           <section>
             <ul style="list-style-type: none;">
@@ -229,6 +243,46 @@ define("module_name", ["depA", "depB"], function(depA, depB){
             </h6>
           </section>
           <section>
+            <pre><code class="hljs" data-line-numbers="11-16" style="font-size: 75%;max-height: 600px;">
+/* lib.js */
+(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+	define("lib", ["depA"], factory);	/* amd */
+  } else if (typeof exports === "object" && typeof module === "object") {
+	module.exports = factory(require("depA"));	/* cjs */
+  } else {
+	root.app = factory(root["depA"]);	/* global */
+  }
+})(this, function(depA) {
+  /* some internal stuff */
+
+  /* export by returning */
+  return sth
+});
+				  
+						</code></pre>
+          </section>
+          <section>
+            <pre><code class="hljs" data-line-numbers="3-10" style="font-size: 75%;max-height: 600px;">
+/* lib.js */
+(function(root, factory) {
+  if (typeof define === "function" && define.amd) {
+	define("lib", ["depA"], factory);	/* amd */
+  } else if (typeof exports === "object" && typeof module === "object") {
+	module.exports = factory(require("depA"));	/* cjs */
+  } else {
+	root.app = factory(root["depA"]);	/* global */
+  }
+})(this, function(depA) {
+  /* some internal stuff */
+
+  /* export by returning */
+  return sth
+});
+				  
+						</code></pre>
+          </section>
+          <section>
             <pre><code class="hljs" data-line-numbers="1-100" style="font-size: 75%;max-height: 600px;">
 /* lib.js */
 (function(root, factory) {
@@ -237,7 +291,7 @@ define("module_name", ["depA", "depB"], function(depA, depB){
   } else if (typeof exports === "object" && typeof module === "object") {
 	module.exports = factory(require("depA"));	/* cjs */
   } else {
-	root.app = factory(root["depA]);	/* global */
+	root.app = factory(root["depA"]);	/* global */
   }
 })(this, function(depA) {
   /* some internal stuff */

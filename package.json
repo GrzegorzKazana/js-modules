@@ -4,27 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "serve": "http-serve -p 3030 public && open http://127.0.0.1:3030",
-    "pack": "webpack",
-    "pack:amd": "webpack -c webpack.config.amd.js",
-    "pack:umd": "webpack -c webpack.config.umd.js",
-    "pack:sys": "webpack -c webpack.config.sys.js",
-    "node:sys": "node node/systemJS/main.js",
-    "slides:install": "cd slides && npm i",
-    "slides:present": "cd slides && npm run start",
-    "start": "run-p serve slides:present"
+    "serve:examples": "http-serve -p 3030 public",
+    "serve:slides": "cd slides && npm run start",
+    "install:slides": "cd slides && npm i",
+    "start": "run-p serve:*"
   },
   "keywords": [],
-  "author": "",
+  "author": "GrzegorzKazana",
   "license": "ISC",
-  "devDependencies": {
-    "http-serve": "^1.0.1",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^4.0.0-beta.2"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "npm-run-all": "^4.1.5",
-    "systemjs": "^6.2.5"
+    "http-serve": "^1.0.1",
+    "npm-run-all": "^4.1.5"
   }
 }
